@@ -1,0 +1,6 @@
+.cache-main
+.settings/
+bin/
+out/
+.out/
+.idea/workspace.xml
