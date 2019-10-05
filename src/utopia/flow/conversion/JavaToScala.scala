@@ -1,10 +1,10 @@
-package utopia.flow.java
+package utopia.flow.conversion
 
 import utopia.flow.async.{Attempt, Completion}
 import utopia.flow.collection.WeakList
 import utopia.flow.datastructure.immutable.{Model, Value}
 import utopia.flow.datastructure.mutable.{Lazy, PointerLike}
-import utopia.flow.java.ConversionDataTypes.JavaValueType
+import utopia.flow.conversion.ConversionDataTypes.JavaValueType
 import utopia.flow.parse.XmlElement
 import utopia.java.flow
 import utopia.java.flow.generics.Variable
@@ -193,7 +193,13 @@ object JavaToScala
 		/**
 		 * @return A scala flow version of this value
 		 */
-		def toScala = new Value(Some(v), JavaValueType)
+		def toScala =
+		{
+			if (v.isDefined)
+				new Value(Some(v), JavaValueType)
+			else
+				Value.emptyWithType(JavaValueType)
+		}
 	}
 	
 	implicit class JFlowModel(val m: generics.Model[Variable]) extends AnyVal

@@ -1,4 +1,4 @@
-package utopia.flow.java
+package utopia.flow.conversion
 
 import utopia.flow.collection.WeakList
 import utopia.flow.datastructure.mutable.Lazy
@@ -12,7 +12,7 @@ import utopia.flow.async.AsyncExtensions._
 import utopia.flow.async.Attempt
 import utopia.flow.datastructure.immutable.Value
 import utopia.flow.datastructure.template.{Model, Property}
-import utopia.flow.java.ConversionDataTypes.JavaValueType
+import utopia.flow.conversion.ConversionDataTypes.JavaValueType
 import utopia.flow.parse.XmlElement
 
 import scala.concurrent.Future

@@ -1,12 +1,12 @@
-package utopia.flow.java
+package utopia.flow.conversion
 
 import java.time.{LocalDate, LocalDateTime, LocalTime}
 
 import utopia.flow.datastructure.immutable.Value
 import utopia.flow.generic.ConversionReliability.{DANGEROUS, PERFECT}
 import utopia.flow.generic.{BooleanType, Conversion, DataType, DoubleType, FloatType, IntType, LocalDateTimeType, LocalDateType, LocalTimeType, LongType, StringType, ValueCaster}
-import utopia.flow.java.ConversionDataTypes.JavaValueType
-import utopia.flow.java.JavaToScala._
+import utopia.flow.conversion.ConversionDataTypes.JavaValueType
+import utopia.flow.conversion.JavaToScala._
 import utopia.java.flow.generics
 
 import scala.collection.immutable.HashSet

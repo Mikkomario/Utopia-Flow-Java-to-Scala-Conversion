@@ -1,4 +1,4 @@
-package utopia.flow.java
+package utopia.flow.conversion
 
 import utopia.flow.generic.{ConversionHandler, DataType}
 import utopia.java.flow.generics.Value
