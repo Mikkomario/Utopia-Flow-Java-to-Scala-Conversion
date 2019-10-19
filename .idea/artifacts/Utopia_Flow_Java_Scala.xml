@@ -8,6 +8,9 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
+      <element id="module-source" name="Utopia-Flow-Java" />
+      <element id="module-source" name="Utopia-Flow-Java-to-Scala-Conversion" />
+      <element id="module-source" name="Utopia-Flow-Scala" />
     </root>
   </artifact>
 </component>
