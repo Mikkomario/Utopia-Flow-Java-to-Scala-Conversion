@@ -1,6 +1,6 @@
 package utopia.flow.conversion
 
-import utopia.flow.async.{Attempt, Completion}
+import utopia.java.flow.async.{Attempt, Completion}
 import utopia.flow.collection.WeakList
 import utopia.flow.datastructure.immutable.{Model, Value}
 import utopia.flow.datastructure.mutable.{Lazy, PointerLike}
@@ -155,7 +155,7 @@ object JavaToScala
 		def toScala = r.first().toInt until r.end().toInt
 	}
 	
-	implicit class JFlowPromise[A](val p: utopia.flow.async.Promise[A]) extends AnyVal
+	implicit class JFlowPromise[A](val p: utopia.java.flow.async.Promise[A]) extends AnyVal
 	{
 		/**
 		 * @param context Execution context (implicit)

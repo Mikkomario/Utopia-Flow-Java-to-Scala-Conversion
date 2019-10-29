@@ -9,7 +9,7 @@ import utopia.java.flow.parse
 import utopia.java.flow.structure.Try.TryFailedException
 import utopia.java.flow.structure.range.{ExclusiveIntRange, InclusiveIntRange}
 import utopia.flow.async.AsyncExtensions._
-import utopia.flow.async.Attempt
+import utopia.java.flow.async.Attempt
 import utopia.flow.datastructure.immutable.Value
 import utopia.flow.datastructure.template.{Model, Property}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
