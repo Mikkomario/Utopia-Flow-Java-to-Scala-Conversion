@@ -31,7 +31,7 @@ object ScalaToJava
 		/**
 		 * @return an immutable list with the same elements and order as this sequence
 		 */
-		def toJava =
+		def toJava: structure.ImmutableList[A] =
 		{
 			val b = new structure.ListBuilder[A](s.size)
 			s.foreach(b.add)
@@ -44,7 +44,7 @@ object ScalaToJava
 		/**
 		 * @return a pair from this tuple
 		 */
-		def toJava = new Pair(t._1, t._2)
+		def toJava: structure.Pair[A, B] = new Pair(t._1, t._2)
 	}
 	
 	implicit class SFlowDuo[A](val t: (A, A)) extends AnyVal
@@ -52,7 +52,7 @@ object ScalaToJava
 		/**
 		 * @return a new duo from this tuple
 		 */
-		def toJavaDuo = new Duo(t._1, t._2)
+		def toJavaDuo: structure.Duo[A] = new Duo(t._1, t._2)
 	}
 	
 	implicit class SFlowOption[A](val o: Option[A]) extends AnyVal
@@ -60,7 +60,7 @@ object ScalaToJava
 		/**
 		 * @return A java flow option from this option's contents
 		 */
-		def toJava = o match
+		def toJava: structure.Option[A] = o match
 		{
 			case Some(v) => structure.Option.some(v)
 			case None => structure.Option.none()
@@ -72,7 +72,7 @@ object ScalaToJava
 		/**
 		 * @return A new immutable map based on this map's contents
 		 */
-		def toJava =
+		def toJava: structure.ImmutableMap[K, V] =
 		{
 			val b = new structure.MapBuilder[K, V](m.size)
 			m.foreach { case (k, v) => b.put(k, v) }
@@ -85,7 +85,7 @@ object ScalaToJava
 		/**
 		 * @return A java flow either with content from this either
 		 */
-		def toJava = e match
+		def toJava: structure.Either[L, R] = e match
 		{
 			case Left(l) => structure.Either.left(l)
 			case Right(r) => structure.Either.right(r)
@@ -110,7 +110,7 @@ object ScalaToJava
 		/**
 		 * @return A java flow lazy based on this lazy instance
 		 */
-		def toJava = new structure.Lazy[A]({() => l.get})
+		def toJava: structure.Lazy[A] = new structure.Lazy[A]({() => l.get})
 	}
 	
 	implicit class SFlowTry[A](val t: Try[A]) extends AnyVal
@@ -118,7 +118,7 @@ object ScalaToJava
 		/**
 		 * @return A java flow try with content equal to this one
 		 */
-		def toJava = t match
+		def toJava: structure.Try[A] = t match
 		{
 			case Success(v) => structure.Try.success(v)
 			case Failure(e) => e match
@@ -135,7 +135,7 @@ object ScalaToJava
 		/**
 		 * @return A java flow weak list identical to this one
 		 */
-		def toJava =
+		def toJava: structure.WeakList[A] =
 		{
 			val b = new structure.WeakListBuilder[A](w.size)
 			w.foreach(b.add)
@@ -185,7 +185,7 @@ object ScalaToJava
 		/**
 		 * @return A mutable java flow model with content equal to this model's current properties
 		 */
-		def toJava =
+		def toJava: generics.Model[generics.Variable] =
 		{
 			val result = generics.Model.createBasicModel()
 			m.attributes.foreach { a => result.addAttribute(a.name, a.value.toJava, false) }
