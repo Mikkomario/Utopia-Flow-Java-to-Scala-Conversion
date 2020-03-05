@@ -164,7 +164,15 @@ object ScalaToJava
 		/**
 		 * @return An attempt based on the results of this future
 		 */
-		def toJava: Attempt[A] = Attempt.tryAsynchronous { () => structure.Try.run({ () => f.waitFor().get }) }
+		def toJava: Attempt[A] = Attempt.tryAsynchronous { () => f.waitFor().toJava }
+	}
+	
+	implicit class SFlowTryFuture[A](val f: Future[Try[A]]) extends AnyVal
+	{
+		/**
+		 * @return An attempt based on the results of this future
+		 */
+		def flattenToJava: Attempt[A] = Attempt.tryAsynchronous { () => f.waitFor().flatten.toJava }
 	}
 	
 	implicit class SFlowValue(val v: Value) extends AnyVal
