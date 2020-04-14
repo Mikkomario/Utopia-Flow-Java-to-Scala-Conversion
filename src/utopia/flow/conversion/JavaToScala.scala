@@ -12,12 +12,12 @@ import utopia.java.flow.structure.range.{ExclusiveRange, InclusiveRange}
 import utopia.java.flow.generics
 import utopia.java.flow.structure.{ImmutableList, ImmutableMap, IntSet, Mutable, Option, Pair, RichIterable}
 
-import scala.collection.generic.CanBuildFrom
 import scala.collection.immutable.VectorBuilder
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
-
 import utopia.flow.generic.ValueConversions._
+
+import scala.collection.Factory
 
 /**
  * Contains extensions that allow conversion between Java and Scala Flow tools
@@ -30,15 +30,15 @@ object JavaToScala
 	{
 		/**
 		 * Collects elements from this iterable into a scala collection
-		 * @param cbf A canBuildFrom for the target collection (implicit)
+		 * @param factory A factory for the target collection (implicit)
 		 * @tparam To Target collection type
 		 * @return A new collection with all same instances as in this one
 		 */
-		def collectToScala[To](implicit cbf: CanBuildFrom[_, A, To]) =
+		def collectToScala[To](implicit factory: Factory[A, To]) =
 		{
-			val builder = cbf()
+			val builder = factory.newBuilder
 			i.estimatedSize().forEach(builder.sizeHint(_))
-			i.forEach(builder.+=)
+			i.forEach { a => builder += a }
 			builder.result()
 		}
 		
@@ -73,7 +73,7 @@ object JavaToScala
 		{
 			val builder = new VectorBuilder[A]()
 			builder.sizeHint(l.size())
-			l.forEach(builder.+=)
+			l.forEach { a => builder += a }
 			builder.result()
 		}
 	}

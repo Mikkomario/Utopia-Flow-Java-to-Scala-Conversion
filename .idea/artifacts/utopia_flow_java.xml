@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="utopia-flow-java">
+    <output-path>$PROJECT_DIR$/out/artifacts/utopia_flow_java</output-path>
+    <root id="archive" name="utopia-flow-java.jar">
+      <element id="module-output" name="Utopia-Flow-Java" />
+      <element id="module-source" name="Utopia-Flow-Java" />
+    </root>
+  </artifact>
+</component>
