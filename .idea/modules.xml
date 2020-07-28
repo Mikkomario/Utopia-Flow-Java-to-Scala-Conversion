@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Utopia-Scala/Flow/Flow.iml" filepath="$PROJECT_DIR$/../Utopia-Scala/Flow/Flow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Utopia/Flow/Flow.iml" filepath="$PROJECT_DIR$/../Utopia/Flow/Flow.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Utopia-Flow-Java/.idea/Utopia-Flow-Java.iml" filepath="$PROJECT_DIR$/../Utopia-Flow-Java/.idea/Utopia-Flow-Java.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utopia-Flow-Java-to-Scala-Conversion.iml" filepath="$PROJECT_DIR$/Utopia-Flow-Java-to-Scala-Conversion.iml" />
     </modules>
