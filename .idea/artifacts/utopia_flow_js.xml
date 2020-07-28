@@ -4,6 +4,9 @@
     <root id="archive" name="utopia-flow-js.jar">
       <element id="module-output" name="Utopia-Flow-Java-to-Scala-Conversion" />
       <element id="module-source" name="Utopia-Flow-Java-to-Scala-Conversion" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>
