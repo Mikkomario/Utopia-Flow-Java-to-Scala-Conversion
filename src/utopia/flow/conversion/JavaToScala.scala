@@ -2,9 +2,9 @@ package utopia.flow.conversion
 
 import utopia.java.flow.async.{Attempt, Completion}
 import utopia.flow.collection.WeakList
-import utopia.flow.datastructure.immutable.{Model, Value}
-import utopia.flow.datastructure.mutable.{Lazy, PointerLike}
+import utopia.flow.datastructure.immutable.{Lazy, Model, Value}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
+import utopia.flow.datastructure.mutable.Settable
 import utopia.flow.parse.XmlElement
 import utopia.java.flow
 import utopia.java.flow.generics.Variable
@@ -116,11 +116,11 @@ object JavaToScala
 		def toScala: Lazy[A] = Lazy { l.get() }
 	}
 	
-	implicit class JFlowMutable[A](val m: Mutable[A]) extends PointerLike[A]
+	implicit class JFlowMutable[A](val m: Mutable[A]) extends Settable[A]
 	{
-		override def get = m.get()
+		override def value_=(newValue: A) = m.set(newValue)
 		
-		override def set(newVal: A) = m.set(newVal)
+		override def value = m.get()
 	}
 	
 	implicit class JFlowTry[A](val t: flow.structure.Try[A]) extends AnyVal

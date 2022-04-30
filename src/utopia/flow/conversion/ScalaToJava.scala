@@ -1,7 +1,6 @@
 package utopia.flow.conversion
 
 import utopia.flow.collection.WeakList
-import utopia.flow.datastructure.mutable.Lazy
 import utopia.java.flow.structure.{Duo, Pair}
 import utopia.java.flow.structure
 import utopia.java.flow.generics
@@ -11,7 +10,7 @@ import utopia.java.flow.structure.range.{ExclusiveIntRange, InclusiveIntRange}
 import utopia.flow.async.AsyncExtensions._
 import utopia.java.flow.async.Attempt
 import utopia.flow.datastructure.immutable.Value
-import utopia.flow.datastructure.template.{Model, Property}
+import utopia.flow.datastructure.template.{LazyLike, Model, Property}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
 import utopia.flow.parse.XmlElement
 
@@ -105,12 +104,12 @@ object ScalaToJava
 		}
 	}
 	
-	implicit class SFlowLazy[A](val l: Lazy[A]) extends AnyVal
+	implicit class SFlowLazy[A](val l: LazyLike[A]) extends AnyVal
 	{
 		/**
 		 * @return A java flow lazy based on this lazy instance
 		 */
-		def toJava: structure.Lazy[A] = new structure.Lazy[A]({() => l.get})
+		def toJava: structure.Lazy[A] = new structure.Lazy[A]({() => l.value})
 	}
 	
 	implicit class SFlowTry[A](val t: Try[A]) extends AnyVal
