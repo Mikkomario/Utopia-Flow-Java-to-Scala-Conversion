@@ -2,12 +2,13 @@ package utopia.flow.conversion
 
 import utopia.java.flow.async.{Attempt, Completion}
 import utopia.flow.collection.WeakList
-import utopia.flow.datastructure.immutable.{Lazy, Model, Value}
+import utopia.flow.datastructure.immutable.{Constant, Lazy, Model, Value}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
 import utopia.flow.datastructure.mutable.Settable
-import utopia.flow.parse.XmlElement
+import utopia.flow.parse.{NamespacedString, XmlElement}
 import utopia.java.flow
 import utopia.java.flow.generics.Variable
+import utopia.flow.generic.ValueConversions._
 import utopia.java.flow.structure.range.{ExclusiveRange, InclusiveRange}
 import utopia.java.flow.generics
 import utopia.java.flow.structure.{ImmutableList, ImmutableMap, IntSet, Mutable, Option, Pair, RichIterable}
@@ -15,8 +16,6 @@ import utopia.java.flow.structure.{ImmutableList, ImmutableMap, IntSet, Mutable,
 import scala.collection.immutable.VectorBuilder
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
-import utopia.flow.generic.ValueConversions._
-
 import scala.collection.Factory
 
 /**
@@ -215,7 +214,16 @@ object JavaToScala
 		/**
 		 * @return A scala flow version of this xml element
 		 */
-		def toScala: XmlElement = new XmlElement(e.getName, e.getValue.toScala, Model.fromMap(e.getAttributes.toScala),
-			e.getChildren.toScala.map { _.toScala })
+		def toScala: XmlElement = {
+			// Java versions don't contain namespaces separately, needs to swap them around
+			val attributes = e.getAttributes.toScala
+				.map[NamespacedString, Value] { case (key, value) => NamespacedString.parseFrom(key) -> value }
+				.groupBy { _._1.namespace }.view
+				.mapValues { attMap =>
+					Model.withConstants(attMap.map { case (key, value) => Constant(key.local, value) }) }
+				.toMap
+			new XmlElement(NamespacedString.parseFrom(e.getName), e.getValue.toScala, attributes,
+				e.getChildren.toScala.map { _.toScala })
+		}
 	}
 }

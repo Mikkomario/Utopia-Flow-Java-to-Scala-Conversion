@@ -205,7 +205,9 @@ object ScalaToJava
 		/**
 		 * @return A java flow xml element based on this element's contents
 		 */
-		def toJava: parse.XmlElement = new parse.XmlElement(e.name, e.value.toJava.toStringOption,
-			e.children.map { _.toJava }.toJava, e.attributes.toMap { _.string }.toJava)
+		def toJava: parse.XmlElement = new parse.XmlElement(e.name.toString, e.value.toJava.toStringOption,
+			e.children.map { _.toJava }.toJava,
+			e.attributeMap.flatMap { case (namespace, model) =>
+				model.attributes.map { att => namespace(att.name).toString -> att.value.getString } }.toJava)
 	}
 }
