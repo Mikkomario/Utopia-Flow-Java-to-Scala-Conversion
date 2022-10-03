@@ -1,6 +1,7 @@
 package utopia.flow.conversion
 
-import utopia.flow.generic.{ConversionHandler, DataType}
+import utopia.flow.generic.casting.ConversionHandler
+import utopia.flow.generic.model.mutable.DataType
 import utopia.java.flow.generics.Value
 
 /**

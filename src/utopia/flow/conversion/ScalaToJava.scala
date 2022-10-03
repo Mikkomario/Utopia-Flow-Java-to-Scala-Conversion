@@ -1,6 +1,5 @@
 package utopia.flow.conversion
 
-import utopia.flow.collection.WeakList
 import utopia.java.flow.structure.{Duo, Pair}
 import utopia.java.flow.structure
 import utopia.java.flow.generics
@@ -8,11 +7,13 @@ import utopia.java.flow.parse
 import utopia.java.flow.structure.Try.TryFailedException
 import utopia.java.flow.structure.range.{ExclusiveIntRange, InclusiveIntRange}
 import utopia.flow.async.AsyncExtensions._
+import utopia.flow.collection.immutable.WeakList
 import utopia.java.flow.async.Attempt
-import utopia.flow.datastructure.immutable.Value
-import utopia.flow.datastructure.template.{LazyLike, Model, Property}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
-import utopia.flow.parse.XmlElement
+import utopia.flow.generic.model.immutable.Value
+import utopia.flow.generic.model.template.ModelLike.AnyModel
+import utopia.flow.parse.xml.XmlElement
+import utopia.flow.view.immutable.caching.Lazy
 
 import scala.concurrent.Future
 import scala.language.implicitConversions
@@ -104,7 +105,7 @@ object ScalaToJava
 		}
 	}
 	
-	implicit class SFlowLazy[A](val l: LazyLike[A]) extends AnyVal
+	implicit class SFlowLazy[A](val l: Lazy[A]) extends AnyVal
 	{
 		/**
 		 * @return A java flow lazy based on this lazy instance
@@ -187,7 +188,7 @@ object ScalaToJava
 		}.getOrElse(generics.Value.EMPTY)
 	}
 	
-	implicit class SFlowModel(val m: Model[Property]) extends AnyVal
+	implicit class SFlowModel(val m: AnyModel) extends AnyVal
 	{
 		/**
 		 * @return A mutable java flow model with content equal to this model's current properties
@@ -195,7 +196,7 @@ object ScalaToJava
 		def toJava: generics.Model[generics.Variable] =
 		{
 			val result = generics.Model.createBasicModel()
-			m.attributes.foreach { a => result.addAttribute(a.name, a.value.toJava, false) }
+			m.properties.foreach { a => result.addAttribute(a.name, a.value.toJava, false) }
 			result
 		}
 	}
@@ -208,6 +209,6 @@ object ScalaToJava
 		def toJava: parse.XmlElement = new parse.XmlElement(e.name.toString, e.value.toJava.toStringOption,
 			e.children.map { _.toJava }.toJava,
 			e.attributeMap.flatMap { case (namespace, model) =>
-				model.attributes.map { att => namespace(att.name).toString -> att.value.getString } }.toJava)
+				model.properties.map { att => namespace(att.name).toString -> att.value.getString } }.toJava)
 	}
 }

@@ -1,22 +1,23 @@
 package utopia.flow.conversion
 
-import utopia.java.flow.async.{Attempt, Completion}
-import utopia.flow.collection.WeakList
-import utopia.flow.datastructure.immutable.{Constant, Lazy, Model, Value}
+import utopia.flow.collection.immutable.WeakList
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
-import utopia.flow.datastructure.mutable.Settable
-import utopia.flow.parse.{NamespacedString, XmlElement}
+import utopia.flow.generic.casting.ValueConversions._
+import utopia.flow.generic.model.immutable.{Constant, Model, Value}
+import utopia.flow.parse.xml.{NamespacedString, XmlElement}
+import utopia.flow.view.immutable.caching.Lazy
+import utopia.flow.view.mutable.Pointer
 import utopia.java.flow
-import utopia.java.flow.generics.Variable
-import utopia.flow.generic.ValueConversions._
-import utopia.java.flow.structure.range.{ExclusiveRange, InclusiveRange}
+import utopia.java.flow.async.{Attempt, Completion}
 import utopia.java.flow.generics
+import utopia.java.flow.generics.Variable
+import utopia.java.flow.structure.range.{ExclusiveRange, InclusiveRange}
 import utopia.java.flow.structure.{ImmutableList, ImmutableMap, IntSet, Mutable, Option, Pair, RichIterable}
 
+import scala.collection.Factory
 import scala.collection.immutable.VectorBuilder
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
-import scala.collection.Factory
 
 /**
  * Contains extensions that allow conversion between Java and Scala Flow tools
@@ -115,10 +116,9 @@ object JavaToScala
 		def toScala: Lazy[A] = Lazy { l.get() }
 	}
 	
-	implicit class JFlowMutable[A](val m: Mutable[A]) extends Settable[A]
+	implicit class JFlowMutable[A](val m: Mutable[A]) extends Pointer[A]
 	{
 		override def value_=(newValue: A) = m.set(newValue)
-		
 		override def value = m.get()
 	}
 	
@@ -192,8 +192,7 @@ object JavaToScala
 		/**
 		 * @return A scala flow version of this value
 		 */
-		def toScala =
-		{
+		def toScala ={
 			if (v.isDefined)
 				new Value(Some(v), JavaValueType)
 			else

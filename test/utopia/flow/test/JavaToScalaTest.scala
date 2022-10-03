@@ -2,7 +2,7 @@ package utopia.flow.test
 
 import utopia.flow.conversion.ConversionDataTypes
 import utopia.flow.conversion.JavaToScala._
-import utopia.flow.util.CollectionExtensions._
+import utopia.flow.collection.CollectionExtensions._
 import utopia.java.flow.structure
 import utopia.java.flow.generics
 import utopia.java.flow.structure.range.IntRange

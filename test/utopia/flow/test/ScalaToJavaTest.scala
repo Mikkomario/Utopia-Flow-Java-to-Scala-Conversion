@@ -1,9 +1,9 @@
 package utopia.flow.test
 
-import utopia.flow.datastructure.immutable.Value
 import utopia.flow.conversion.ConversionDataTypes
 import utopia.flow.conversion.ScalaToJava._
-import utopia.flow.generic.ValueConversions._
+import utopia.flow.generic.casting.ValueConversions._
+import utopia.flow.generic.model.immutable.Value
 import utopia.java.flow.structure
 import utopia.java.flow.structure.range.IntRange
 

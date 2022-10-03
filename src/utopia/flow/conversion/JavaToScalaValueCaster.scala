@@ -1,12 +1,12 @@
 package utopia.flow.conversion
 
 import java.time.{LocalDate, LocalDateTime, LocalTime}
-
-import utopia.flow.datastructure.immutable.Value
-import utopia.flow.generic.ConversionReliability.{DANGEROUS, PERFECT}
-import utopia.flow.generic.{BooleanType, Conversion, DataType, DoubleType, FloatType, IntType, LocalDateTimeType, LocalDateType, LocalTimeType, LongType, StringType, ValueCaster}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
 import utopia.flow.conversion.JavaToScala._
+import utopia.flow.generic.casting.ValueCaster
+import utopia.flow.generic.model.enumeration.ConversionReliability.{Dangerous, Perfect}
+import utopia.flow.generic.model.immutable.{Conversion, Value}
+import utopia.flow.generic.model.mutable.{BooleanType, DataType, DoubleType, FloatType, IntType, LocalDateTimeType, LocalDateType, LocalTimeType, LongType, StringType}
 import utopia.java.flow.generics
 
 import scala.collection.immutable.HashSet
@@ -24,7 +24,7 @@ object JavaToScalaValueCaster extends ValueCaster
 	// TODO: Add vector support
 	override val conversions = HashSet(StringType, IntType, LongType, FloatType, DoubleType, BooleanType,
 		LocalTimeType, LocalDateType, LocalDateTimeType).flatMap {
-		t => Vector(Conversion(JavaValueType, t, DANGEROUS), Conversion(t, JavaValueType, PERFECT)) }
+		t => Vector(Conversion(JavaValueType, t, Dangerous), Conversion(t, JavaValueType, Perfect)) }
 	
 	override def cast(value: Value, toType: DataType) =
 	{
