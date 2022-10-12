@@ -6,7 +6,8 @@ import utopia.flow.conversion.JavaToScala._
 import utopia.flow.generic.casting.ValueCaster
 import utopia.flow.generic.model.enumeration.ConversionReliability.{Dangerous, Perfect}
 import utopia.flow.generic.model.immutable.{Conversion, Value}
-import utopia.flow.generic.model.mutable.{BooleanType, DataType, DoubleType, FloatType, IntType, LocalDateTimeType, LocalDateType, LocalTimeType, LongType, StringType}
+import utopia.flow.generic.model.mutable.DataType
+import utopia.flow.generic.model.mutable.DataType.{BooleanType, DoubleType, FloatType, IntType, LocalDateTimeType, LocalDateType, LocalTimeType, LongType, StringType}
 import utopia.java.flow.generics
 
 import scala.collection.immutable.HashSet

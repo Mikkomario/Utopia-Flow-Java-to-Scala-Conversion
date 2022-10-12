@@ -14,15 +14,15 @@ object ConversionDataTypes
 	/**
 	 * Represents a java-style value in a scala value environment
 	 */
-	object JavaValueType extends DataType("Value", classOf[Value])
+	object JavaValueType extends DataType
+	{
+		override def name = "Value"
+		override def supportedClass = classOf[Value]
+		override def superType = None
+	}
 	
 	/**
 	 * Sets up all required data types
 	 */
-	def setup() =
-	{
-		DataType.setup()
-		DataType.introduceTypes(JavaValueType)
-		ConversionHandler.addCaster(JavaToScalaValueCaster)
-	}
+	def setup() = ConversionHandler.addCaster(JavaToScalaValueCaster)
 }
