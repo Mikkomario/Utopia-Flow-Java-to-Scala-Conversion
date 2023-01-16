@@ -1,7 +1,8 @@
 package utopia.flow.conversion
 
-import utopia.flow.collection.immutable.WeakList
+import utopia.flow.collection.immutable.{Pair, WeakList}
 import utopia.flow.conversion.ConversionDataTypes.JavaValueType
+import utopia.flow.conversion.JavaTypes.JTuple
 import utopia.flow.generic.casting.ValueConversions._
 import utopia.flow.generic.model.immutable.{Constant, Model, Value}
 import utopia.flow.parse.xml.{NamespacedString, XmlElement}
@@ -12,7 +13,7 @@ import utopia.java.flow.async.{Attempt, Completion}
 import utopia.java.flow.generics
 import utopia.java.flow.generics.Variable
 import utopia.java.flow.structure.range.{ExclusiveRange, InclusiveRange}
-import utopia.java.flow.structure.{ImmutableList, ImmutableMap, IntSet, Mutable, Option, Pair, RichIterable}
+import utopia.java.flow.structure.{Duo, ImmutableList, ImmutableMap, IntSet, Mutable, Option, RichIterable}
 
 import scala.collection.Factory
 import scala.collection.immutable.VectorBuilder
@@ -26,6 +27,15 @@ import scala.util.{Failure, Success, Try}
  */
 object JavaToScala
 {
+	implicit class JavaIterator[A](val i: java.util.Iterator[A]) extends AnyVal
+	{
+		/**
+		 * @return A Scala version of this iterator.
+		 *         Invalidates this iterator.
+		 */
+		def toScala: Iterator[A] = new JavaIteratorWrapper[A](i)
+	}
+	
 	implicit class JFlowIterable[A](val i: RichIterable[A]) extends AnyVal
 	{
 		/**
@@ -48,12 +58,20 @@ object JavaToScala
 		def toVector: Vector[A] = collectToScala
 	}
 	
-	implicit class JFlowPair[A, B](val p: Pair[A, B]) extends AnyVal
+	implicit class JFlowPair[A, B](val p: JTuple[A, B]) extends AnyVal
 	{
 		/**
 		 * @return A tuple representation of this pair
 		 */
 		def toScala = (p.first(), p.second())
+	}
+	
+	implicit class JFlowDuo[A](val d: Duo[A]) extends AnyVal
+	{
+		/**
+		 * @return A scala pair based on this duo
+		 */
+		def toScala = Pair(d.first(), d.second())
 	}
 	
 	implicit class JFlowOption[A](val o: Option[A]) extends AnyVal
